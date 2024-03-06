@@ -1,26 +1,35 @@
-# Go Graceful Shutdown Library
+
+# Simple Graceful Shutdown
+
+[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](https://godoc.org/github.com/dsbasko/go-gs)
+
+[![GitHub Workflow](https://github.com/dsbasko/go-gs/actions/workflows/go.yaml/badge.svg?branch=main)](https://github.com/dsbasko/go-gs/actions/workflows/go.yaml)
+[![Test Coverage](https://codecov.io/gh/dsbasko/go-gs/graph/badge.svg?token=P092XR0B9L)](https://codecov.io/gh/dsbasko/go-gs)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dsbasko/go-gs)](https://goreportcard.com/report/github.com/dsbasko/go-gs)
+![GitHub Version](https://img.shields.io/github/go-mod/go-version/dsbasko/go-gs.svg)
+![GitHub Tag](https://img.shields.io/github/tag/dsbasko/go-gs.svg)
+
 Package gogs provides a mechanism for managing graceful shutdowns in Go applications.
 
 It defines an interface, GracefulShutdowner, with methods for subscribing and 
 unsubscribing to shutdown events, and waiting for all events to complete. It also provides 
 a concrete implementation of this interface, GracefulShutdown.
 
-GracefulShutdown uses a sync.WaitGroup to wait for all active shutdown events to complete, 
-and an atomic.Int32 to keep track of the count of active events. The package also provides 
-functions for creating a new context or channel that can be used to signal shutdown events.
+GracefulShutdown uses a WaitGroup to wait for all active shutdown events to complete, and 
+an atomic to keep track of the count of active events. The package also provides functions 
+for creating a new context or channel that can be used to signal shutdown events.
 
-Need go version 1.19 or later.
+<br>
 
-### Installation
+## Installation
 To install the library, use the go get command:
 ```bash
 go get github.com/dsbasko/go-gs
 ```
 
-## Usage
-Here is an example of how to use the library:
+<br>
 
-**Code:**
+## Usage
 
 ```go
 package main
@@ -131,6 +140,8 @@ func someWorker(ctx context.Context, gs gogs.GracefulShutdowner, count int) {
 2006/02/01 00:00:05 main: graceful shutdown is done!
 ```
 
+<br>
+
 ## Constructors
 ```go
 // Creates a new context for graceful shutdown and returns a new GracefulShutdowner, the new context, and a cancel function.
@@ -139,6 +150,8 @@ gs, ctx, cancel := gogs.NewContext(context.Background(), syscall.SIGINT, syscall
 // Creates a new channel for graceful shutdown and returns a new GracefulShutdowner and the new channel.
 gs, ch := gogs.NewChannel(syscall.SIGINT, syscall.SIGTERM)
 ```
+
+<br>
 
 ## Methods
 
